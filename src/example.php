@@ -40,7 +40,40 @@ $book3 = new Book($json);
 $book4 = new Book($book1);
 $book4->title = 'Book title 4';
 
+//book, based on existing book, using setter
+$book5 = new Book();
+$book5->set($book4);
+$book5->title = 'Book title 5';
+
+//book from array, using setter
+$book6 = new Book();
+$book6->setFromArray([
+    'author' => 'Author Name',
+    'title' => 'Book title 6',
+    'isbn' => '000-0-000-00000-0',
+    'pages' => 48,
+    'publicated' => true,
+    'tags' => ['science', 'nature'],
+]);
+
+//book from JSON, using setter
+$json = <<<JSN
+{
+    "author": "Author Name",
+    "title": "Book title 7",
+    "isbn": "000-0-000-00000-0",
+    "pages": 78,
+    "publicated": true,
+    "tags": ["history", "country"]
+}
+JSN;
+$book7 = new Book();
+$book7->setFromJson($json);
+
 var_dump($book1);
 var_dump($book2);
 var_dump($book3);
 var_dump($book4);
+var_dump($book5);
+var_dump($book6);
+var_dump($book7);
