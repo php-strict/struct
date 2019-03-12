@@ -1,6 +1,4 @@
 <?php
-require_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
-
 use \PhpStrict\Struct;
 
 class StructEmptyExample extends Struct
@@ -35,7 +33,10 @@ class StructTest extends \Codeception\Test\Unit
         $this->assertEquals(true, $struct->bln);
         $this->assertCount(3, $struct->arr);
         $this->assertNull($struct->obj);
-        
+    }
+    
+    public function testSetFromArray()
+    {
         $data = [
             'int' => 1,
             'flt' => 2.3,
@@ -44,6 +45,50 @@ class StructTest extends \Codeception\Test\Unit
             'arr' => ['value1', 'value2', 'value3'],
             'obj' => (object) ['field1' => 'value1', 'field2' => 'value2'],
         ];
+        
+        $struct1 = new StructEmptyExample($data);
+        $this->assertNotNull($struct1->obj);
+        
+        $struct2 = new StructEmptyExample();
+        $this->assertNull($struct2->obj);
+        
+        $struct2->setFromArray($data);
+        $this->assertEquals($struct1, $struct2);
+        $this->assertEquals($data, $struct2->getArray());
+    }
+    
+    public function testSet()
+    {
+        $data = [
+            'int' => 1,
+            'flt' => 2.3,
+            'str' => 'test',
+            'bln' => true,
+            'arr' => ['value1', 'value2', 'value3'],
+            'obj' => (object) ['field1' => 'value1', 'field2' => 'value2'],
+        ];
+        
+        $struct1 = new StructEmptyExample($data);
+        
+        $struct2 = new StructEmptyExample();
+        $struct2->set($struct1);
+        $this->assertEquals($struct1, $struct2);
+        $this->assertEquals($data, $struct1->getArray());
+    }
+    
+    public function testSetFromJson()
+    {
+        $data = [
+            'int' => 1,
+            'flt' => 2.3,
+            'str' => 'test',
+            'bln' => true,
+            'arr' => ['value1', 'value2', 'value3'],
+            'obj' => (object) ['field1' => 'value1', 'field2' => 'value2'],
+        ];
+        
+        $struct1 = new StructEmptyExample($data);
+        
         $json = <<<JSN
 {
     "int": 1,
@@ -55,24 +100,10 @@ class StructTest extends \Codeception\Test\Unit
 }
 JSN;
         
-        $struct1 = new StructEmptyExample($data);
-        $this->assertNotNull($struct1->obj);
-        
         $struct2 = new StructEmptyExample();
-        $this->assertNull($struct2->obj);
-        $struct2->setFromArray($data);
+        $struct2->setFromJson($json);
         $this->assertEquals($struct1, $struct2);
-        $this->assertEquals($data, $struct2->getArray());
-        
-        $struct3 = new StructEmptyExample();
-        $struct3->set($struct2);
-        $this->assertEquals($struct2, $struct3);
-        $this->assertEquals($data, $struct3->getArray());
-        
-        $struct4 = new StructEmptyExample();
-        $struct4->setFromJson($json);
-        $this->assertEquals($struct3, $struct4);
-        $this->assertEquals(['int', 'flt', 'str', 'bln', 'arr', 'obj'], $struct4->getFields());
-        $this->assertEquals(json_encode(json_decode($json)), (string) $struct4);
+        $this->assertEquals(['int', 'flt', 'str', 'bln', 'arr', 'obj'], $struct2->getFields());
+        $this->assertEquals(json_encode(json_decode($json)), (string) $struct2);
     }
 }

@@ -70,6 +70,8 @@ JSN;
 $book7 = new Book();
 $book7->setFromJson($json);
 
+/*
+You can compare structures fields, or use var_dump:
 var_dump($book1);
 var_dump($book2);
 var_dump($book3);
@@ -77,3 +79,4 @@ var_dump($book4);
 var_dump($book5);
 var_dump($book6);
 var_dump($book7);
+*/
