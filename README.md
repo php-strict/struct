@@ -2,6 +2,8 @@
 
 [![Software License][ico-license]](LICENSE.txt)
 [![Build Status][ico-travis]][link-travis]
+[![Codacy Badge][ico-codacy]][link-codacy]
+
 
 Implementation of composite type for PHP.
 
@@ -104,3 +106,5 @@ vendor\bin\codecept run
 [ico-license]: https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/enikeishik/ufoframework/master.svg?style=flat-square
 [link-travis]: https://travis-ci.org/php-strict/struct
+[ico-codacy]: https://api.codacy.com/project/badge/Grade/92ff05432c1c4c1b8599e1f53ee5c15a
+[link-codacy]: https://www.codacy.com/app/php-strict/struct?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=php-strict/struct&amp;utm_campaign=Badge_Grade
