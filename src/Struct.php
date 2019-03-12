@@ -69,24 +69,35 @@ abstract class Struct implements StructInterface
     public function setFromArray(array $vars, bool $cast = true): void
     {
         if ($cast) {
-            foreach ($vars as $key => $val) {
-                if (property_exists($this, $key)) {
-                    if (is_int($this->$key)) {
-                        $this->$key = (int) $val;
-                    } elseif (is_string($this->$key)) {
-                        $this->$key = (string) $val;
-                    } elseif (is_bool($this->$key)) {
-                        $this->$key = (bool) $val;
-                    } elseif (is_float($this->$key)) {
-                        $this->$key = (float) $val;
-                    } else {
-                        $this->$key = $val;
-                    }
-                }
+            $this->setFromArrayWithCast($vars);
+            return;
+        }
+        
+        foreach ($vars as $key => $val) {
+            if (property_exists($this, $key)) {
+                $this->$key = $val;
             }
-        } else {
-            foreach ($vars as $key => $val) {
-                if (property_exists($this, $key)) {
+        }
+    }
+    
+    /**
+     * Sets $this fields values from $vars associated array with type casting.
+     * 
+     * @param array $vars
+     */
+    protected function setFromArrayWithCast(array $vars): void
+    {
+        foreach ($vars as $key => $val) {
+            if (property_exists($this, $key)) {
+                if (is_int($this->$key)) {
+                    $this->$key = (int) $val;
+                } elseif (is_string($this->$key)) {
+                    $this->$key = (string) $val;
+                } elseif (is_bool($this->$key)) {
+                    $this->$key = (bool) $val;
+                } elseif (is_float($this->$key)) {
+                    $this->$key = (float) $val;
+                } else {
                     $this->$key = $val;
                 }
             }
