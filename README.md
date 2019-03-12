@@ -9,7 +9,7 @@ Contains methods to create from associated array, JSON string or another Struct,
 
 ## Requirements
 
-*  PHP >= 7.1
+*   PHP >= 7.1
 
 ## Install
 
