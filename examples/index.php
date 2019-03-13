@@ -80,3 +80,19 @@ var_dump($book5);
 var_dump($book6);
 var_dump($book7);
 */
+
+//default configuration, as defined in Config
+$config = new Config();
+
+//load new configuration from JSON file
+$config->setFromJson(file_get_contents('config.json'));
+
+/*
+Usage of $config may looks like this
+
+passing cache directory path into Cache object
+$cache = new Cache($config->cacheDir);
+
+passing itemsOnPage config value into Paginator object
+$paginator = new Paginator($config->itemsOnPage);
+*/

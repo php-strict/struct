@@ -93,7 +93,7 @@ $book4 = new Book($book1);
 $book4->title = 'Book title 4';
 ```
 
-See src/example.php for more examples.
+See examples dir.
 
 ## Tests
 
