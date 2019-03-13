@@ -4,7 +4,6 @@
 [![Build Status][ico-travis]][link-travis]
 [![Codacy Badge][ico-codacy]][link-codacy]
 
-
 Implementation of composite type for PHP.
 
 Contains methods to create from associated array, JSON string or another Struct, with/without type cast.
@@ -17,7 +16,9 @@ Contains methods to create from associated array, JSON string or another Struct,
 
 Install with [Composer](http://getcomposer.org):
     
-    composer require php-strict/struct 
+```
+composer require php-strict/struct
+```
 
 ## Usage
 
