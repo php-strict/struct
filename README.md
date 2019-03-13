@@ -16,7 +16,7 @@ Contains methods to create from associated array, JSON string or another Struct,
 
 Install with [Composer](http://getcomposer.org):
     
-```
+```bash
 composer require php-strict/struct
 ```
 
