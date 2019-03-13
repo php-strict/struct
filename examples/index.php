@@ -7,7 +7,9 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace PhpStrict;
+namespace Examples;
+
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 /**
  * Example of usage Book class.
@@ -81,11 +83,16 @@ var_dump($book6);
 var_dump($book7);
 */
 
+
+/**
+ * Example of usage Config class.
+ */
+
 //default configuration, as defined in Config
 $config = new Config();
 
 //load new configuration from JSON file
-$config->setFromJson(file_get_contents('config.json'));
+$config->setFromJson(file_get_contents(__DIR__ . '/config.json'));
 
 /*
 Usage of $config may looks like this
