@@ -1,5 +1,6 @@
 <?php
 use \PhpStrict\Struct;
+use \PhpStrict\StructInterface;
 
 class StructEmptyExample extends Struct
 {
@@ -23,21 +24,9 @@ class StructFilledExample extends Struct
 
 class StructTest extends \Codeception\Test\Unit
 {
-    public function testStruct()
+    protected function getDataArray(): array
     {
-        $struct = new StructFilledExample();
-        $this->assertInstanceOf(Struct::class, $struct);
-        $this->assertEquals(1, $struct->int);
-        $this->assertEquals(2.3, $struct->flt);
-        $this->assertEquals('test', $struct->str);
-        $this->assertEquals(true, $struct->bln);
-        $this->assertCount(3, $struct->arr);
-        $this->assertNull($struct->obj);
-    }
-    
-    public function testSetFromArray()
-    {
-        $data = [
+        return [
             'int' => 1,
             'flt' => 2.3,
             'str' => 'test',
@@ -45,6 +34,77 @@ class StructTest extends \Codeception\Test\Unit
             'arr' => ['value1', 'value2', 'value3'],
             'obj' => (object) ['field1' => 'value1', 'field2' => 'value2'],
         ];
+    }
+    
+    protected function getDataJson(): string
+    {
+        $json = <<<JSN
+{
+    "int": 1,
+    "flt": 2.3,
+    "str": "test",
+    "bln": true,
+    "arr": ["value1", "value2", "value3"],
+    "obj": {"field1": "value1", "field2": "value2"}
+}
+JSN;
+        return $json;
+    }
+    
+    protected function testFields(StructInterface $struct, array $data)
+    {
+        $this->assertInstanceOf(Struct::class, $struct);
+        $this->assertEquals($data['int'], $struct->int);
+        $this->assertEquals($data['flt'], $struct->flt);
+        $this->assertEquals($data['str'], $struct->str);
+        $this->assertEquals($data['bln'], $struct->bln);
+        $this->assertCount(count($data['arr']), $struct->arr);
+        $this->assertEquals($data['arr'], $struct->arr);
+        $this->assertEquals($data['arr'][1], ($struct->arr)[1]);
+        $this->assertEquals($data['obj'], $struct->obj);
+    }
+    
+    public function testStruct()
+    {
+        $data = $this->getDataArray();
+        $struct = new StructFilledExample();
+        $struct->obj = $data['obj'];
+        $this->testFields($struct, $data);
+    }
+    
+    public function testConstructWithArray()
+    {
+        $data = $this->getDataArray();
+        
+        $this->testFields(
+            new StructEmptyExample($data), 
+            $this->getDataArray()
+        );
+    }
+    
+    public function testConstructWithStruct()
+    {
+        $data = $this->getDataArray();
+        $struct = new StructFilledExample();
+        $struct->obj = $data['obj'];
+        
+        $this->testFields(
+            new StructEmptyExample($struct), 
+            $data
+        );
+    }
+    
+    public function testConstructWithJson()
+    {
+        $this->testFields(
+            new StructEmptyExample($this->getDataJson()), 
+            $this->getDataArray()
+        );
+    }
+    
+    public function testSetFromArray()
+    {
+        $data = $this->getDataArray();
         
         $struct1 = new StructEmptyExample($data);
         $this->assertNotNull($struct1->obj);
@@ -59,14 +119,7 @@ class StructTest extends \Codeception\Test\Unit
     
     public function testSet()
     {
-        $data = [
-            'int' => 1,
-            'flt' => 2.3,
-            'str' => 'test',
-            'bln' => true,
-            'arr' => ['value1', 'value2', 'value3'],
-            'obj' => (object) ['field1' => 'value1', 'field2' => 'value2'],
-        ];
+        $data = $this->getDataArray();
         
         $struct1 = new StructEmptyExample($data);
         
@@ -78,27 +131,11 @@ class StructTest extends \Codeception\Test\Unit
     
     public function testSetFromJson()
     {
-        $data = [
-            'int' => 1,
-            'flt' => 2.3,
-            'str' => 'test',
-            'bln' => true,
-            'arr' => ['value1', 'value2', 'value3'],
-            'obj' => (object) ['field1' => 'value1', 'field2' => 'value2'],
-        ];
+        $data = $this->getDataArray();
         
         $struct1 = new StructEmptyExample($data);
         
-        $json = <<<JSN
-{
-    "int": 1,
-    "flt": 2.3,
-    "str": "test",
-    "bln": true,
-    "arr": ["value1", "value2", "value3"],
-    "obj": {"field1": "value1", "field2": "value2"}
-}
-JSN;
+        $json = $this->getDataJson();
         
         $struct2 = new StructEmptyExample();
         $struct2->setFromJson($json);
