@@ -36,6 +36,18 @@ class StructTest extends \Codeception\Test\Unit
         ];
     }
     
+    protected function getDataStringArray(): array
+    {
+        return [
+            'int' => '1',
+            'flt' => '2.3',
+            'str' => 'test',
+            'bln' => 'true',
+            'arr' => ['value1', 'value2', 'value3'],
+            'obj' => (object) ['field1' => 'value1', 'field2' => 'value2'],
+        ];
+    }
+    
     protected function getDataJson(): string
     {
         $json = <<<JSN
@@ -112,9 +124,30 @@ JSN;
         $struct2 = new StructEmptyExample();
         $this->assertNull($struct2->obj);
         
+        //with cast using typed data
         $struct2->setFromArray($data);
         $this->assertEquals($struct1, $struct2);
         $this->assertEquals($data, $struct2->getArray());
+        
+        //without cast using typed data
+        $struct3 = new StructEmptyExample();
+        $struct3->setFromArray($data, false);
+        $this->assertEquals($struct1, $struct3);
+        
+        //with cast using string data
+        $strData = $this->getDataStringArray();
+        $struct4 = new StructEmptyExample();
+        $struct4->setFromArray($strData);
+        $this->assertEquals($struct1, $struct4);
+        $this->assertEquals($data, $struct4->getArray());
+        
+        //without cast using string data
+        $strData = $this->getDataStringArray();
+        $struct5 = new StructEmptyExample();
+        $struct5->setFromArray($strData, false);
+        $this->assertNotEquals($struct1, $struct5);
+        $this->assertNotEquals($data, $struct5->getArray());
+        $this->assertEquals($strData, $struct5->getArray());
     }
     
     public function testSet()
