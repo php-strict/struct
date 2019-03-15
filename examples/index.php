@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Examples;
+namespace PhpStrict\Struct\Examples;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 

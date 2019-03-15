@@ -1,6 +1,6 @@
 <?php
-use \PhpStrict\Struct;
-use \PhpStrict\StructInterface;
+use \PhpStrict\Struct\Struct;
+use \PhpStrict\Struct\StructInterface;
 
 class StructEmptyExample extends Struct
 {

@@ -20,8 +20,8 @@
     },
     "autoload": {
         "psr-4": {
-            "PhpStrict\\": "src/",
-            "Examples\\": "examples/"
+            "PhpStrict\\Struct\\": "src/",
+            "PhpStrict\\Struct\\Examples\\": "examples/"
         }
     }
 }

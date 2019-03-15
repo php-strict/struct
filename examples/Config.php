@@ -7,9 +7,9 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Examples;
+namespace PhpStrict\Struct\Examples;
 
-use PhpStrict\Struct;
+use PhpStrict\Struct\Struct;
 
 /**
  * Example struct class, implements some configuration.
