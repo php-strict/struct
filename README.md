@@ -26,7 +26,7 @@ composer require php-strict/struct
 Define your own composite type by extending Struct class:
 
 ```php
-use PhpStrict\Struct
+use PhpStrict\Struct\Struct
 
 class Book extends Struct
 {
@@ -65,8 +65,6 @@ class Book extends Struct
 Now you can fill your strcuture with data:
 
 ```php
-use PhpStrict\Struct
-
 //book with classic assign data to class fields
 $book1 = new Book();
 $book1->author = 'Author Name';
